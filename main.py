@@ -26,12 +26,13 @@ def main():
     headers = {"Accept": "application/json"}
     response = requests.get(url, headers=headers, params=querystring)
     response = response.json()
-    
+
     print("chat_gpt를 활용해서 글을 만들고 있습니다.")
     gpt = chat_gpt.get_response()
     answer = gpt.make_response(mode.trs, mode.code_string)
     title = f"백준 {response['problemId']} {response['titleKo']} (Python / 파이썬)"
-    contents = "\n**이 글은 Chat-GPT 3.5에 의해 자동으로 생성된 블로그 글 입니다. 완벽한 정보가 아닐 수 있음을 알려드립니다.**\n"+answer.content + "\n\n**이 글은 Chat-GPT 3.5에 의해 자동으로 생성된 블로그 글 입니다. 완벽한 정보가 아닐 수 있음을 알려드립니다.**"
+    print(answer.content)
+    contents = "\n**이 글은 Chat-GPT 3.5에 의해 자동으로 생성된 블로그 글 입니다. 완벽한 정보가 아닐 수 있음을 알려드립니다.**\n"+answer.content +f"###전체코드\n```\n{mode.code_string}\n```"
     
     print("글을 포스팅 중입니다...!")
     create_blog.posting(title, contents)
